@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 import 'package:image/image.dart' as img;
 import 'package:qr/qr.dart';
@@ -22,44 +23,44 @@ extension QrImageExporter on QrImage {
     int lightColor = 0xFFFFFFFF,
   }) {
     // Calculate the total width and height of the image, including margins.
-    final imageWidth = (moduleCount * moduleSize) + (margin * 2);
-    final imageHeight = (moduleCount * moduleSize) + (margin * 2);
+    final int imageWidth = (moduleCount * moduleSize) + (margin * 2);
+    final int imageHeight = (moduleCount * moduleSize) + (margin * 2);
 
     // Create a new image with the calculated dimensions.
-    final image = img.Image(width: imageWidth, height: imageHeight);
+    final img.Image image = img.Image(width: imageWidth, height: imageHeight);
 
     // Decompose ARGB lightColor into individual R, G, B, A channels.
-    final lightR = (lightColor >> 16) & 0xFF;
-    final lightG = (lightColor >> 8) & 0xFF;
-    final lightB = lightColor & 0xFF;
-    final lightA = (lightColor >> 24) & 0xFF;
+    final int lightR = (lightColor >> 16) & 0xFF;
+    final int lightG = (lightColor >> 8) & 0xFF;
+    final int lightB = lightColor & 0xFF;
+    final int lightA = (lightColor >> 24) & 0xFF;
 
     // Decompose ARGB darkColor into individual R, G, B, A channels.
-    final darkR = (darkColor >> 16) & 0xFF;
-    final darkG = (darkColor >> 8) & 0xFF;
-    final darkB = darkColor & 0xFF;
-    final darkA = (darkColor >> 24) & 0xFF;
+    final int darkR = (darkColor >> 16) & 0xFF;
+    final int darkG = (darkColor >> 8) & 0xFF;
+    final int darkB = darkColor & 0xFF;
+    final int darkA = (darkColor >> 24) & 0xFF;
 
     // Initialize the entire image with the lightColor (background).
     // This is done by iterating through each pixel to ensure compatibility
     // with different versions of the 'image' package's clear/fill methods.
-    for (var y = 0; y < imageHeight; y++) {
-      for (var x = 0; x < imageWidth; x++) {
+    for (int y = 0; y < imageHeight; y++) {
+      for (int x = 0; x < imageWidth; x++) {
         image.setPixelRgba(x, y, lightR, lightG, lightB, lightA);
       }
     }
 
     // Draw the QR code modules (dark parts) onto the image.
-    for (var row = 0; row < moduleCount; row++) {
-      for (var col = 0; col < moduleCount; col++) {
+    for (int row = 0; row < moduleCount; row++) {
+      for (int col = 0; col < moduleCount; col++) {
         // Check if the current module is dark.
         if (isDark(row, col)) {
           // Calculate the starting pixel coordinates for the current module.
-          final startX = margin + col * moduleSize;
-          final startY = margin + row * moduleSize;
+          final int startX = margin + col * moduleSize;
+          final int startY = margin + row * moduleSize;
           // Draw the module as a square block of pixels.
-          for (var x = 0; x < moduleSize; x++) {
-            for (var y = 0; y < moduleSize; y++) {
+          for (int x = 0; x < moduleSize; x++) {
+            for (int y = 0; y < moduleSize; y++) {
               image.setPixelRgba(
                 startX + x,
                 startY + y,
@@ -77,9 +78,13 @@ extension QrImageExporter on QrImage {
     // Encode the generated image into PNG byte data.
     try {
       return img.encodePng(image);
-    } catch (e) {
-      // Print error if PNG encoding fails.
-      print('Error encoding PNG: $e');
+    } catch (e, stackTrace) {
+      log(
+        'Failed to encode the generated QR image to PNG.',
+        error: e,
+        stackTrace: stackTrace,
+        name: 'QrImageExporter',
+      );
       return null;
     }
   }

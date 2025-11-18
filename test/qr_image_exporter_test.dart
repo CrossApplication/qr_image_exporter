@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:image/image.dart' as img;
 import 'package:path/path.dart' as p;
-import 'package:qr/qr.dart';
 import 'package:qr_image_exporter/qr_image_exporter.dart';
 
 import 'package:test/test.dart';
@@ -14,7 +13,7 @@ void main() {
 
     // Set up a temporary directory for test output files.
     setUp(() {
-      final currentDir = Directory.current;
+      final Directory currentDir = Directory.current;
       testOutputDir = Directory(p.join(currentDir.path, 'test_output'));
       if (!testOutputDir.existsSync()) {
         testOutputDir.createSync(recursive: true);
@@ -29,15 +28,15 @@ void main() {
     });
 
     test('should export a basic QR code to PNG bytes', () {
-      const qrData = 'https://pub.dev/packages/qr';
-      final qrCode = QrCode.fromData(
+      const String qrData = 'https://pub.dev/packages/qr';
+      final QrCode qrCode = QrCode.fromData(
         data: qrData,
         errorCorrectLevel: QrErrorCorrectLevel.M,
       );
-      final qrImage = QrImage(qrCode);
+      final QrImage qrImage = QrImage(qrCode);
 
-      const moduleSize = 5;
-      const margin = 25;
+      const int moduleSize = 5;
+      const int margin = 25;
 
       // Generate PNG bytes for the QR code.
       final Uint8List? pngBytes = qrImage.toPngBytes(
@@ -54,29 +53,34 @@ void main() {
       expect(decodedImage, isNotNull);
 
       // Calculate the expected image dimensions based on QR code properties.
-      final expectedWidth = (qrImage.moduleCount * moduleSize) + (margin * 2);
-      final expectedHeight = (qrImage.moduleCount * moduleSize) + (margin * 2);
+      final int expectedWidth =
+          (qrImage.moduleCount * moduleSize) + (margin * 2);
+      final int expectedHeight =
+          (qrImage.moduleCount * moduleSize) + (margin * 2);
 
       // Assert that the decoded image dimensions match the expected size.
       expect(decodedImage!.width, equals(expectedWidth));
       expect(decodedImage.height, equals(expectedHeight));
 
       // Save the generated image to a file for manual inspection.
-      final filePath = p.join(testOutputDir.path, 'test_qrcode_basic.png');
+      final String filePath = p.join(
+        testOutputDir.path,
+        'test_qrcode_basic.png',
+      );
       File(filePath).writeAsBytesSync(pngBytes);
       // print('Generated QR code image: $filePath'); // Comment out for cleaner test output
     });
 
     test('should handle different colors and sizes', () {
-      const qrData = 'https://github.com/kevmoo/qr.dart';
-      final qrCode = QrCode.fromData(
+      const String qrData = 'https://github.com/kevmoo/qr.dart';
+      final QrCode qrCode = QrCode.fromData(
         data: qrData,
         errorCorrectLevel: QrErrorCorrectLevel.L,
       );
-      final qrImage = QrImage(qrCode);
+      final QrImage qrImage = QrImage(qrCode);
 
-      const moduleSize = 2;
-      const margin = 10;
+      const int moduleSize = 2;
+      const int margin = 10;
 
       // Generate PNG bytes with custom colors and sizes.
       final Uint8List? pngBytes = qrImage.toPngBytes(
@@ -95,29 +99,34 @@ void main() {
       expect(decodedImage, isNotNull);
 
       // Calculate the expected image dimensions based on QR code properties.
-      final expectedWidth = (qrImage.moduleCount * moduleSize) + (margin * 2);
-      final expectedHeight = (qrImage.moduleCount * moduleSize) + (margin * 2);
+      final int expectedWidth =
+          (qrImage.moduleCount * moduleSize) + (margin * 2);
+      final int expectedHeight =
+          (qrImage.moduleCount * moduleSize) + (margin * 2);
 
       // Assert that the decoded image dimensions match the expected size.
       expect(decodedImage!.width, equals(expectedWidth));
       expect(decodedImage.height, equals(expectedHeight));
 
       // Save the generated image to a file for manual inspection.
-      final filePath = p.join(testOutputDir.path, 'test_qrcode_colored.png');
+      final String filePath = p.join(
+        testOutputDir.path,
+        'test_qrcode_colored.png',
+      );
       File(filePath).writeAsBytesSync(pngBytes);
       // print('Generated colored QR code image: $filePath'); // Comment out for cleaner test output
     });
 
     test('should export an empty QR code to PNG bytes', () {
-      const qrData = ''; // Empty string
-      final qrCode = QrCode.fromData(
+      const String qrData = ''; // Empty string
+      final QrCode qrCode = QrCode.fromData(
         data: qrData,
         errorCorrectLevel: QrErrorCorrectLevel.M,
       );
-      final qrImage = QrImage(qrCode);
+      final QrImage qrImage = QrImage(qrCode);
 
-      const moduleSize = 5;
-      const margin = 25;
+      const int moduleSize = 5;
+      const int margin = 25;
 
       final Uint8List? pngBytes = qrImage.toPngBytes(
         moduleSize: moduleSize,
@@ -131,13 +140,18 @@ void main() {
       expect(decodedImage, isNotNull);
 
       // For empty data, QrCode should generate Version 1, which has moduleCount of 21.
-      final expectedWidth = (qrImage.moduleCount * moduleSize) + (margin * 2);
-      final expectedHeight = (qrImage.moduleCount * moduleSize) + (margin * 2);
+      final int expectedWidth =
+          (qrImage.moduleCount * moduleSize) + (margin * 2);
+      final int expectedHeight =
+          (qrImage.moduleCount * moduleSize) + (margin * 2);
       // 21 * 5 + (25 * 2) = 105 + 50 = 155
       expect(decodedImage!.width, equals(expectedWidth));
       expect(decodedImage.height, equals(expectedHeight));
 
-      final filePath = p.join(testOutputDir.path, 'test_qrcode_empty.png');
+      final String filePath = p.join(
+        testOutputDir.path,
+        'test_qrcode_empty.png',
+      );
       File(filePath).writeAsBytesSync(pngBytes);
     });
   });
