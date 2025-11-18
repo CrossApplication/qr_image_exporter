@@ -2,7 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/qr_image_exporter.svg)](https://pub.dev/packages/qr_image_exporter)
 
-An extension for the popular `qr.dart` package, providing a simple, robust way to **export QR code modules as PNG byte data**.
+An extension for the popular [`qr.dart` package](https://github.com/kevmoo/qr.dart), providing a simple, robust way to **export QR code modules as PNG byte data**.
 
 ---
 
@@ -31,7 +31,7 @@ dependencies:
 
 ### Usage
 
-Import the `qr_image_exporter` package. The necessary classes (QrCode, QrImage) are automatically exposed, allowing you to use the `toPngBytes()` extension method immediately.
+Import the `qr_image_exporter` package. The necessary classes (`QrCode`, `QrImage`) are automatically exposed, allowing you to use the `toPngBytes()` extension method immediately.
 
 ```dart
 import 'dart:io';
@@ -100,4 +100,4 @@ Returns: A `Uint8List` containing the PNG image data, or `null` if encoding fail
 
 Contributions are welcome! Feel free to open an issue or submit a pull request if you have suggestions or bug fixes.
 
-This package was created to address the long-standing image export request from the original qr.dart package ([Issue #62](https://github.com/kevmoo/qr.dart/issues/62)).
+This package was created to address the long-standing image export request from the original `qr.dart` package ([Issue #62](https://github.com/kevmoo/qr.dart/issues/62)).
