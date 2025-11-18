@@ -3,24 +3,26 @@ import 'dart:typed_data';
 import 'package:qr_image_exporter/qr_image_exporter.dart';
 
 void main() {
-  // Create QR code data
+  // 1. Generate the core QrImage data
   final QrCode qrCode = QrCode.fromData(
-    data: 'Hello, World!',
+    data: 'https://pub.dev/packages/qr_image_exporter',
     errorCorrectLevel: QrErrorCorrectLevel.M,
   );
   final QrImage qrImage = QrImage(qrCode);
 
-  // Export PNG data
+  // 2. Use the 'toPngBytes' extension method to export
   final Uint8List? pngBytes = qrImage.toPngBytes(
-    moduleSize: 8,
-    margin: 40,
-    darkColor: 0xFF0066AA, // Blue
+    // Optional: Customize the image output
+    moduleSize: 8, // Larger dots (higher resolution)
+    margin: 30, // Larger border
+    darkColor: 0xFF0057B8, // Example: Blue
+    lightColor: 0xFFF0DA49, // Example: Yellow
   );
 
   if (pngBytes != null) {
-    // Save as file (example)
-    File('my_qr_code.png').writeAsBytesSync(pngBytes);
+    // Example: Save the byte data to a file
+    File('custom_qr_code.png').writeAsBytesSync(pngBytes);
     // ignore: avoid_print
-    print('QR code saved as my_qr_code.png.');
+    print('QR code successfully exported!');
   }
 }
