@@ -26,7 +26,6 @@ Add `qr_image_exporter` to your project's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  qr: ^3.0.2 # You'll need the core 'qr' package too
   qr_image_exporter: ^1.0.0 # Use the latest version
 ```
 
