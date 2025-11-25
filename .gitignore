@@ -27,3 +27,21 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+
+# Compiled files/executables
+*.aot
+*.dill
+*.exe
+# Coverage reports
+/coverage/
+
+# macOS metadata files
+.DS_Store
+# Vim swap files, temporary files, etc.
+*~
+*.swp
+*.bak
+# VS Code specific files
+.vscode/
+# IntelliJ/Android Studio files
+.idea/

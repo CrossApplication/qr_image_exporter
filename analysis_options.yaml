@@ -1,0 +1,87 @@
+# analysis_options.yaml
+
+linter:
+  rules:
+    # --- 🛡️ Safety, Typing, and Reliability ---
+    # Requires explicit type specification everywhere (local variables, fields, functions, etc.).
+    - always_specify_types
+    # Enforces the use of the @override annotation.
+    - annotate_overrides
+    # Avoids method calls on dynamic types to reduce runtime error risk.
+    - avoid_dynamic_calls
+    # Avoids returning null from void functions.
+    - avoid_returning_null_for_void
+    # Requires handling or explicit ignoring of Future results.
+    - unawaited_futures
+    # Recommends using rethrow to preserve the original stack trace when rethrowing an exception.
+    - use_rethrow_when_possible
+
+    # --- 🚀 Performance and Const ---
+    # Recommends using const constructors when possible.
+    - prefer_const_constructors
+    # Recommends using const declarations when possible.
+    - prefer_const_declarations
+    # Recommends using final for local variables that aren't reassigned.
+    - prefer_final_locals
+    # Recommends using final for variables in for-each loops.
+    - prefer_final_in_for_each
+    # Avoids redundant const keywords.
+    - unnecessary_const
+    # Avoids unnecessary await in return statements (e.g., return await future;).
+    - unnecessary_await_in_return
+
+    # --- ✨ Conciseness and Null Safety ---
+    # Recommends using the ?? operator over a verbose ternary operator for null checks (e.g., a ?? b).
+    - prefer_if_null_operators
+    # Recommends using the compact this.fieldName syntax for constructor field initialization.
+    - prefer_initializing_formals
+    # Recommends using string interpolation ($) instead of the + operator for string concatenation.
+    - prefer_interpolation_to_compose_strings
+    # Recommends using the is! operator instead of !is.
+    - prefer_is_not_operator
+    # Recommends null-aware method calls (?. ).
+    - prefer_null_aware_method_calls
+    # Recommends null-aware operators (??, ?. ).
+    - prefer_null_aware_operators
+    # Recommends list.isEmpty over list.length == 0.
+    - prefer_is_empty
+    # Recommends using the modern super parameter syntax.
+    - use_super_parameters
+
+    # --- 🗑️ Redundancy and Cleanup ---
+    # Avoids redundant initialization with = null.
+    - avoid_init_to_null
+    # Discourages the use of print() outside of debugging.
+    - avoid_print
+    # Avoids empty catch blocks (exceptions should not be silently ignored).
+    - empty_catches
+    # Avoids unnecessary this. prefix.
+    - unnecessary_this
+    # Avoids unnecessary overrides that just call the super method.
+    - unnecessary_overrides
+    # Avoids redundant ? on final variable declarations.
+    - unnecessary_nullable_for_final_variable_declarations
+    # Avoids redundant nulls in null-aware operators (e.g., a ?? null).
+    - unnecessary_null_in_if_null_operators
+    # Avoids unnecessary string interpolations (e.g., '${variable}' when '$variable' suffices).
+    - unnecessary_string_interpolations
+
+    # --- ✍️ Style and Readability ---
+    # Requires trailing commas in collections (lists, argument lists, etc.).
+    - require_trailing_commas
+    # Requires documentation comments (///) for public members.
+    - public_member_api_docs
+    # Recommends SCREAMING_SNAKE_CASE for constant identifiers.
+    - constant_identifier_names
+    # Avoids renaming parameters when implementing abstract methods or interfaces.
+    - avoid_renaming_method_parameters
+    # Recommends regular function declarations over function variables.
+    - prefer_function_declarations_over_variables
+    # Recommends the use of single quotes.
+    - prefer_single_quotes
+    # Recommends placing constructors first in a class definition.
+    - sort_constructors_first
+    # Avoids local identifiers that start with an underscore (_).
+    - no_leading_underscores_for_local_identifiers
+    # Recommends using the modern function type syntax for parameters.
+    - use_function_type_syntax_for_parameters
