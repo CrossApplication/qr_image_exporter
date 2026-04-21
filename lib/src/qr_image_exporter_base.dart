@@ -75,6 +75,7 @@ extension QrImageExporter on QrImage {
         image.setPixelRgba(x, y, lightR, lightG, lightB, lightA);
       }
     }
+
     // Draw the QR code modules (dark parts) onto the image.
     for (int row = 0; row < moduleCount; row++) {
       for (int col = 0; col < moduleCount; col++) {
