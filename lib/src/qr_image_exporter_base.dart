@@ -18,11 +18,11 @@ extension QrImageExporter on QrImage {
   ///   (e.g., 0xFFFFFFFF for white).
   ///
   /// Returns:
-  /// A [Uint8List] containing the PNG image data. 
+  /// A [Uint8List] containing the PNG image data.
   /// Returns `null` if:
   /// - [moduleSize] is less than 1 or [margin] is less than 0.
   /// - The resulting image dimension exceeds the safe hardware texture limit (4096 pixels).
-  /// - An unexpected error occurs during image generation or PNG encoding.
+  /// - An unexpected error occurs during PNG encoding.
   Uint8List? toPngBytes({
     int moduleSize = 4,
     int margin = 20,
