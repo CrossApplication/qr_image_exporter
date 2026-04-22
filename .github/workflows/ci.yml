@@ -1,4 +1,4 @@
-name: Flutter CI
+name: Dart CI
 
 on:
   push:
@@ -14,17 +14,16 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v6
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+      - name: Set up Dart
+        uses: dart-lang/setup-dart@v1
         with:
-          channel: 'stable'
-          cache: true
+          sdk: stable
 
       - name: Install dependencies
-        run: flutter pub get
+        run: dart pub get
 
       - name: Analyze code
-        run: flutter analyze
+        run: dart analyze
 
       - name: Run tests
-        run: flutter test
+        run: dart test
