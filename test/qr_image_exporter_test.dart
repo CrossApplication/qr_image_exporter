@@ -445,5 +445,83 @@ void main() {
       // 3. File output and integrity verification
       verifyFileIntegrity('max_boundary', pngBytes, testOutputDir);
     });
+
+    // Invalid Geometric Bounds Test (Error Handling)
+    test('should return null when invalid geometric bounds are provided', () {
+      // GIVEN: Set up basic QR data
+      const String qrData = 'Invalid Bounds Test';
+      final QrCode qrCode = QrCode.fromData(
+        data: qrData,
+        errorCorrectLevel: QrErrorCorrectLevel.M,
+      );
+      final QrImage qrImage = QrImage(qrCode);
+
+      // WHEN & THEN: Assert that invalid module sizes return null
+      expect(
+        qrImage.toPngBytes(moduleSize: 0, margin: 10),
+        isNull,
+        reason: 'moduleSize of 0 should return null',
+      );
+      expect(
+        qrImage.toPngBytes(moduleSize: -5, margin: 10),
+        isNull,
+        reason: 'Negative moduleSize should return null',
+      );
+
+      // WHEN & THEN: Assert that invalid margins return null
+      expect(
+        qrImage.toPngBytes(moduleSize: 5, margin: -1),
+        isNull,
+        reason: 'Negative margin should return null',
+      );
+    });
+
+    // OutOfMemory (OOM) Prevention Test (Boundary Case)
+    test('should return null when requested image dimension exceeds max safe limit', () {
+      // GIVEN: Set up basic QR data
+      const String qrData = 'OOM Prevention Test';
+      final QrCode qrCode = QrCode.fromData(
+        data: qrData,
+        errorCorrectLevel: QrErrorCorrectLevel.M,
+      );
+      final QrImage qrImage = QrImage(qrCode);
+
+      // V1 QR code has 21 modules. 
+      // If moduleSize is 200, width is 21 * 200 = 4200px.
+      // 4200px > 4096px (maxSafeDimension), so it should be blocked.
+      const int extremeModuleSize = 200;
+      const int normalMargin = 0;
+
+      // WHEN
+      final Uint8List? pngBytesSizeOverflow = qrImage.toPngBytes(
+        moduleSize: extremeModuleSize,
+        margin: normalMargin,
+      );
+
+      // THEN: Assert that the massive image request is blocked and returns null
+      expect(
+        pngBytesSizeOverflow,
+        isNull,
+        reason: 'Image dimension exceeding 4096px should return null to prevent OOM.',
+      );
+
+      // GIVEN: Normal module size but massive margin
+      // 21 * 10 = 210px. Margin of 2000 adds 4000px. Total = 4210px > 4096px.
+      const int normalModuleSize = 10;
+      const int extremeMargin = 2000;
+
+      // WHEN
+      final Uint8List? pngBytesMarginOverflow = qrImage.toPngBytes(
+        moduleSize: normalModuleSize,
+        margin: extremeMargin,
+      );
+
+      // THEN: Assert that the massive margin request is also blocked
+      expect(
+        pngBytesMarginOverflow,
+        isNull,
+        reason: 'Image dimension (due to extreme margin) exceeding 4096px should return null.',
+      );
+    });
   });
 }

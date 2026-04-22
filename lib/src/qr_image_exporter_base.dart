@@ -7,24 +7,50 @@ import 'package:qr/qr.dart';
 extension QrImageExporter on QrImage {
   /// Exports the QR code modules from [QrImage] as PNG byte data.
   ///
-  /// [moduleSize] specifies the pixel size of each QR code module (dot)
-  ///  in the output image.
-  /// A larger value results in higher resolution.
-  /// [margin] defines the number of pixels to add as a border
-  ///  around the QR code.
-  /// [darkColor] is the ARGB color of the dark modules
-  ///  (e.g., 0xFF000000 for black).
-  /// [lightColor] is the ARGB color of the light modules
-  ///  (e.g., 0xFFFFFFFF for white).
+  /// Parameters:
+  /// * [moduleSize] specifies the pixel size of each QR code module (dot)
+  ///   in the output image. Must be >= 1. A larger value results in higher resolution.
+  /// * [margin] defines the number of pixels to add as a border
+  ///   around the QR code. Must be >= 0.
+  /// * [darkColor] is the ARGB color of the dark modules
+  ///   (e.g., 0xFF000000 for black).
+  /// * [lightColor] is the ARGB color of the light modules
+  ///   (e.g., 0xFFFFFFFF for white).
+  ///
+  /// Returns:
+  /// A [Uint8List] containing the PNG image data.
+  /// Returns `null` if:
+  /// - [moduleSize] is less than 1 or [margin] is less than 0.
+  /// - The resulting image dimension exceeds the safe hardware texture limit (4096 pixels).
+  /// - An unexpected error occurs during PNG encoding.
   Uint8List? toPngBytes({
     int moduleSize = 4,
     int margin = 20,
     int darkColor = 0xFF000000,
     int lightColor = 0xFFFFFFFF,
   }) {
+    // Validate geometric bounds to prevent invalid image dimensions.
+    if (moduleSize < 1 || margin < 0) {
+      log(
+        'Invalid parameters: moduleSize must be >= 1 and margin must be >= 0.',
+        name: 'QrImageExporter',
+      );
+      return null;
+    }
+
     // Calculate the total width and height of the image, including margins.
     final int imageWidth = (moduleCount * moduleSize) + (margin * 2);
     final int imageHeight = (moduleCount * moduleSize) + (margin * 2);
+    // Validate the maximum dimensions to prevent OutOfMemory (OOM) errors.
+    // 4096px is generally considered the maximum safe texture size for mobile hardware.
+    const int maxSafeDimension = 4096;
+    if (imageWidth > maxSafeDimension || imageHeight > maxSafeDimension) {
+      log(
+        'Requested QR image dimension (${imageWidth}px) exceeds the maximum safe dimension (${maxSafeDimension}px).',
+        name: 'QrImageExporter',
+      );
+      return null;
+    }
 
     // Create a new image with the calculated dimensions.
     final img.Image image = img.Image(width: imageWidth, height: imageHeight);
