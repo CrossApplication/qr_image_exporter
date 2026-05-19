@@ -8,7 +8,7 @@ environment:
   sdk: ^3.8.1
 
 dependencies:
-  qr: ^3.0.2
+  qr: ">=3.0.2 <5.0.0"
   image: ^4.5.4
 
 dev_dependencies:
