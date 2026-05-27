@@ -5,7 +5,7 @@ version: 1.0.1
 repository: https://github.com/CrossApplication/qr_image_exporter
 
 environment:
-  sdk: ^3.8.1
+  sdk: ^3.11.0
 
 dependencies:
   qr: ">=3.0.2 <5.0.0"
