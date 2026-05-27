@@ -1,7 +1,7 @@
 name: qr_image_exporter
 description: An extension for the `qr.dart` package that provides a simple and robust way to export QR code modules as customizable PNG byte data.
 
-version: 1.0.1
+version: 2.0.0
 repository: https://github.com/CrossApplication/qr_image_exporter
 
 environment:
