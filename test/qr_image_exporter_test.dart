@@ -64,9 +64,9 @@ void main() {
     test('should export a basic QR code to PNG bytes with default colors', () {
       // GIVEN: Set up QR data, image object, and calculate the expected size
       const String qrData = 'https://pub.dev/packages/qr';
-      final QrCode qrCode = QrCode.fromData(
-        data: qrData,
-        errorCorrectLevel: QrErrorCorrectLevel.M,
+      final QrCode qrCode = QrCode(
+        payload: QrPayload.fromString(qrData),
+        errorCorrectLevel: QrErrorCorrectLevel.medium,
       );
       final QrImage qrImage = QrImage(qrCode);
 
@@ -119,9 +119,9 @@ void main() {
     test('should handle different colors and sizes', () {
       // GIVEN: Set up QR data with custom colors and calculated expected size
       const String qrData = 'https://github.com/kevmoo/qr.dart';
-      final QrCode qrCode = QrCode.fromData(
-        data: qrData,
-        errorCorrectLevel: QrErrorCorrectLevel.L,
+      final QrCode qrCode = QrCode(
+        payload: QrPayload.fromString(qrData),
+        errorCorrectLevel: QrErrorCorrectLevel.low,
       );
       final QrImage qrImage = QrImage(qrCode);
 
@@ -162,9 +162,9 @@ void main() {
     test('should export an empty QR code (Version 1) to PNG bytes', () {
       // GIVEN: Set up an empty QR code (results in Version 1) and calculate expected size
       const String qrData = ''; // Empty string
-      final QrCode qrCode = QrCode.fromData(
-        data: qrData,
-        errorCorrectLevel: QrErrorCorrectLevel.M,
+      final QrCode qrCode = QrCode(
+        payload: QrPayload.fromString(qrData),
+        errorCorrectLevel: QrErrorCorrectLevel.medium,
       );
       final QrImage qrImage = QrImage(qrCode);
 
@@ -203,9 +203,9 @@ void main() {
     test('should correctly apply dark and light colors at specific points', () {
       // GIVEN: Set up QR data and custom colors for pixel verification
       const String qrData = 'Color Test Data Verification';
-      final QrCode qrCode = QrCode.fromData(
-        data: qrData,
-        errorCorrectLevel: QrErrorCorrectLevel.H,
+      final QrCode qrCode = QrCode(
+        payload: QrPayload.fromString(qrData),
+        errorCorrectLevel: QrErrorCorrectLevel.high,
       );
       final QrImage qrImage = QrImage(qrCode);
 
@@ -297,9 +297,9 @@ void main() {
     test('should correctly handle zero margin', () {
       // GIVEN: Set up QR data with zero margin and calculate expected size
       const String qrData = 'Zero Margin Test';
-      final QrCode qrCode = QrCode.fromData(
-        data: qrData,
-        errorCorrectLevel: QrErrorCorrectLevel.M,
+      final QrCode qrCode = QrCode(
+        payload: QrPayload.fromString(qrData),
+        errorCorrectLevel: QrErrorCorrectLevel.medium,
       );
       final QrImage qrImage = QrImage(qrCode);
 
@@ -357,9 +357,9 @@ void main() {
     test('should correctly handle minimum module size (1)', () {
       // GIVEN: Set up QR data with minimum module size (1) and calculate expected size
       const String qrData = 'Min Size Test';
-      final QrCode qrCode = QrCode.fromData(
-        data: qrData,
-        errorCorrectLevel: QrErrorCorrectLevel.M,
+      final QrCode qrCode = QrCode(
+        payload: QrPayload.fromString(qrData),
+        errorCorrectLevel: QrErrorCorrectLevel.medium,
       );
       final QrImage qrImage = QrImage(qrCode);
 
@@ -397,9 +397,10 @@ void main() {
       // Use a long string and high correction (H) to force V40
       final String qrData = 'X' * testDataLength;
 
-      final QrCode qrCode = QrCode.fromData(
-        data: qrData,
-        errorCorrectLevel: QrErrorCorrectLevel.H,
+      final QrCode qrCode = QrCode(
+        payload: QrPayload.fromString(qrData),
+        errorCorrectLevel: QrErrorCorrectLevel.high,
+        minTypeNumber: 40,
       );
       final QrImage qrImage = QrImage(qrCode);
 
@@ -450,9 +451,9 @@ void main() {
     test('should return null when invalid geometric bounds are provided', () {
       // GIVEN: Set up basic QR data
       const String qrData = 'Invalid Bounds Test';
-      final QrCode qrCode = QrCode.fromData(
-        data: qrData,
-        errorCorrectLevel: QrErrorCorrectLevel.M,
+      final QrCode qrCode = QrCode(
+        payload: QrPayload.fromString(qrData),
+        errorCorrectLevel: QrErrorCorrectLevel.medium,
       );
       final QrImage qrImage = QrImage(qrCode);
 
@@ -480,9 +481,9 @@ void main() {
     test('should return null when requested image dimension exceeds max safe limit', () {
       // GIVEN: Set up basic QR data
       const String qrData = 'OOM Prevention Test';
-      final QrCode qrCode = QrCode.fromData(
-        data: qrData,
-        errorCorrectLevel: QrErrorCorrectLevel.M,
+      final QrCode qrCode = QrCode(
+        payload: QrPayload.fromString(qrData),
+        errorCorrectLevel: QrErrorCorrectLevel.medium,
       );
       final QrImage qrImage = QrImage(qrCode);
 
