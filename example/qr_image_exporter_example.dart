@@ -4,9 +4,9 @@ import 'package:qr_image_exporter/qr_image_exporter.dart';
 
 void main() {
   // 1. Generate the core QrImage data
-  final QrCode qrCode = QrCode.fromData(
-    data: 'https://pub.dev/packages/qr_image_exporter',
-    errorCorrectLevel: QrErrorCorrectLevel.M,
+  final QrCode qrCode = QrCode(
+    payload: QrPayload.fromString('https://pub.dev/packages/qr_image_exporter'),
+    errorCorrectLevel: QrErrorCorrectLevel.medium,
   );
   final QrImage qrImage = QrImage(qrCode);
 
